@@ -19,7 +19,7 @@ public class Config {
 
 	public static int MaxOnlineClient = 2000;
 
-	public static int ThreadPool = 400;
+	public static int ThreadPool = 50;
 
 	public static int SocketInputStreamReadNumber = 2048;
 
