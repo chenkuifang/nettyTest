@@ -47,8 +47,8 @@ public class HttpServer {
 	public void bind(int port) throws Exception {
 		// 自定义Task和定时任务都交由EventLoopGroup执行，统一调度，提升I/O线程的处理和性能
 		// 创建两个线程池
-		NioEventLoopGroup bossGroup = new NioEventLoopGroup();
-		NioEventLoopGroup workerGroup = new NioEventLoopGroup();
+		NioEventLoopGroup bossGroup = new NioEventLoopGroup(1);
+		NioEventLoopGroup workerGroup = new NioEventLoopGroup(4);
 
 		try {
 
