@@ -13,9 +13,8 @@ import com.alibaba.fastjson.JSONObject;
  */
 public class Config {
 	public static final String TOKEN = "xxxxx";
-	public static final String ConfigFile = "b7mw.json";
 	public static final int MaxBuyerLimit = 500000;
-	public static int Port = 31004;
+	public static int Port = 8080;
 
 	public static int MaxOnlineClient = 2000;
 
@@ -23,7 +22,7 @@ public class Config {
 
 	public static int SocketInputStreamReadNumber = 2048;
 
-	public static String ServerAuth = "b7mw";
+	public static String ServerAuth = "phonepn";
 
 	public static int SoTimeout = 0;
 
