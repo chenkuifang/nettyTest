@@ -11,7 +11,7 @@ import io.netty.util.internal.SystemPropertyUtil;
 
 /**
  *
- * 管理SSLContext的工厂类
+ * 管理SSLContext的工厂类(SSL类1)
  * 
  * @author CKF
  * @version 7.1

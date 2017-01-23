@@ -12,7 +12,7 @@ import io.netty.handler.codec.http.HttpResponseEncoder;
  *
  * 服务端channel(通道)初始化类
  * 
- * ChannelPipeline作用：负责管理和执行ChannelHandler <br>
+ * ChannelPipeline(管道)作用：负责管理和执行ChannelHandler <br>
  * 网络事件以事件流的形式在ChannelPipeline中流转，由ChannelPipeline根据ChannelHandler
  * 的执行策略调度ChannelHandler的执行
  * 
@@ -23,10 +23,11 @@ import io.netty.handler.codec.http.HttpResponseEncoder;
  * 
  * 
  * 系统提供的实用ChannelHandler<br>
- * 1.系统编解码框架：ByteToMessageCodec;  2.通用基于长度的半包解码器：LengthFieldBasedFrameDecoder;
- * 3.码流日志打印Handler:LoggingHandler;  4.SSL安全认证Handler:SslHandler;
- * 5.链路空闲 检测Handler:IdleStateHandler;  6.流量整形Handler:ChannelTrafficShapingHandler;
- * 7.Base64编码器：Base64Decoder  Base64Encoder;
+ * 1.系统编解码框架：ByteToMessageCodec; 2.通用基于长度的半包解码器：LengthFieldBasedFrameDecoder;
+ * 3.码流日志打印Handler:LoggingHandler; 4.SSL安全认证Handler:SslHandler; <br>
+ * 5.链路空闲 检测Handler:IdleStateHandler;
+ * 6.流量整形Handler:ChannelTrafficShapingHandler;<br>
+ * 7.Base64编码器：Base64Decoder Base64Encoder;
  * 
  * 
  * 
@@ -40,15 +41,6 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
 	@Override
 	protected void initChannel(SocketChannel sc) throws Exception {
 		ChannelPipeline pipeline = sc.pipeline();
-
-		// 安全的套接层 secure sockets layer(作用：在传输层对网络连接进行加密)
-		// if (isSSL) {
-		// SSLEngine engine =
-		// SecureChatSslContextFactory.getServerContext().createSSLEngine();
-		// engine.setUseClientMode(false);
-		// // engine.setNeedClientAuth(true);
-		// pipeline.addLast("ssl", new SslHandler(engine));
-		// }
 
 		/**
 		 * http-request解码器<br>
@@ -73,7 +65,7 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
 		 * 原因是http解码器在每个http消息中会生成多个消息对象 <br>
 		 * 避免了channelRead多次调用
 		 */
-		pipeline.addLast("aggregator", new HttpObjectAggregator(65535));
+		pipeline.addLast("aggregator", new HttpObjectAggregator(65535));// 放在decoder以后
 
 		/**
 		 * 读超时,一般放在客户端，超时将关闭channle
@@ -89,6 +81,17 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
 		 * 处理服务端
 		 */
 		pipeline.addLast("handler", new HttpServerrHandler());
+
+		// 以下是https设置：
+		// 安全的套接层 secure sockets layer(作用：在传输层对网络连接进行加密) https
+		// if (isSSL) {
+		// SSLEngine engine =
+		// SecureChatSslContextFactory.getServerContext().createSSLEngine();
+		// engine.setUseClientMode(false);  //非客户端模式
+		// // engine.setNeedClientAuth(true);
+		// pipeline.addLast("ssl", new SslHandler(engine));
+		// }
+
 	}
 
 }
