@@ -92,6 +92,7 @@ public class MessageReceived {
 	 */
 	private void dohttpRequest() throws Exception {
 		FullHttpRequest request = this.request = msg;
+		System.out.println(HttpUtil.is100ContinueExpected(request));
 		// 判断做操作
 		URI uri = new URI(request.uri());
 		if (uri.getPath().equals("/favicon.ico")) {
